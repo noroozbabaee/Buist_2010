@@ -1,0 +1,673 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="IERG" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Ether-a-go-go-potassiuom-channel-->
+    <import xlink:href="../common/units.cellml">
+        <units name="current_units" units_ref="current_units"/>
+        <units name="voltage_units" units_ref="voltage_units"/>
+        <units name="time_units" units_ref="time_units"/>
+        <units name="conductance_units" units_ref="conductance_units"/>
+        <units name="millimolar" units_ref="millimolar"/>
+    </import>
+    <component name="xr1_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="xr1_inf_SM" units="dimensionless"/>
+        <variable name="tau_xr1_SM" units="time_units"/>
+        <variable initial_value="0.0" name="xr1_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_K" public_interface="in" units="dimensionless"/>
+        <!-- equation that calculates xr1-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>xr1_inf_SM</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1.0</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1.0</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>Vm_SM</ci>
+                                    <cn cellml:units="voltage_units">27</cn>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="voltage_units">5.0</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates xr1-->
+            <!-- equation that calculates tau_xr1-->
+            <apply>
+                <eq/>
+                <ci>tau_xr1_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_K</ci>
+                    <cn cellml:units="time_units">80</cn>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates xr1-->
+            <!-- equation that calculates xr1-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>xr1_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>xr1_inf_SM</ci>
+                        <ci>xr1_SM</ci>
+                    </apply>
+                    <ci>tau_xr1_SM</ci>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure of equation d(xr1)/dt=(xr1_inf-xr1)/tau_xr1-->
+    </component>
+    <!-- closure of xr1-->
+    <component name="xr2_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="xr2_inf_SM" units="dimensionless"/>
+        <variable name="tau_xr2_SM" units="time_units"/>
+        <variable initial_value="0.82" name="xr2_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_K" public_interface="in" units="dimensionless"/>
+        <!-- equation that calculates xr2_inf-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>xr2_inf_SM</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="dimensionless">0.2</cn>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">0.8</cn>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1.0</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <plus/>
+                                        <ci>Vm_SM</ci>
+                                        <cn cellml:units="voltage_units">58</cn>
+                                    </apply>
+                                    <cn cellml:units="voltage_units">10</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates xr2_inf-->
+            <!-- equation that calculates tau_xr2-->
+            <apply>
+                <eq/>
+                <ci>tau_xr2_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_K</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="time_units">707</cn>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="time_units">1481</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <plus/>
+                                        <ci>Vm_SM</ci>
+                                        <cn cellml:units="voltage_units">36</cn>
+                                    </apply>
+                                    <cn cellml:units="voltage_units">95</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates tau_xr2-->
+            <!-- equation that calculates d_kr-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>xr2_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>xr2_inf_SM</ci>
+                        <ci>xr2_SM</ci>
+                    </apply>
+                    <ci>tau_xr2_SM</ci>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure of equation d(xr2)/dt=(xr2_inf-xr2)/tau_xr2-->
+    </component>
+    <!-- closure of xr2-->
+    <component name="I_kr_SM">
+        <variable cmeta:id="I_kr_SM_I_kr_SM" name="I_kr_SM" public_interface="out" units="current_units"/>
+        <variable name="E_K" units="voltage_units"/>
+        <variable initial_value="35" name="G_max_kr_SM" units="conductance_units"/>
+        <variable name="Vm_SM" private_interface="out" public_interface="in" units="voltage_units"/>
+        <variable name="xr1_SM" private_interface="in" units="dimensionless"/>
+        <variable name="xr2_SM" private_interface="in" units="dimensionless"/>
+        <variable name="RToF" public_interface="in" units="voltage_units"/>
+        <variable name="K_o" public_interface="in" units="millimolar"/>
+        <variable name="K_i" public_interface="in" units="millimolar"/>
+        <variable name="T_correction_K" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="time" private_interface="out" public_interface="in" units="time_units"/>
+        <!-- EQUATION OF E_K-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>E_K</ci>
+                <apply>
+                    <times/>
+                    <ci>RToF</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <divide/>
+                            <ci>K_o</ci>
+                            <ci>K_i</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure ofEquation E_K -->
+            <!-- EQUATION OF I_kr-->
+            <apply>
+                <eq/>
+                <ci>I_kr_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>G_max_kr_SM</ci>
+                    <ci>xr1_SM</ci>
+                    <ci>xr2_SM</ci>
+                    <apply>
+                        <minus/>
+                        <ci>Vm_SM</ci>
+                        <ci>E_K</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure ofEquation I_kr -->
+    </component>
+    <!-- closure of I_kr-->
+    <component name="m_Na_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="m_inf_Na" units="dimensionless"/>
+        <variable name="tau_m_Na" units="time_units"/>
+        <variable initial_value="0.005" name="m_Na_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_Na" public_interface="in" units="dimensionless"/>
+        <!-- equation that calculates m_Na-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>m_inf_Na</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1.0</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1.0</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>Vm_SM</ci>
+                                    <cn cellml:units="voltage_units">47</cn>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="voltage_units">4.8</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates m_inf_Na-->
+            <!-- equation that calculates tau_m_Na-->
+            <apply>
+                <eq/>
+                <ci>tau_m_Na</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_Na</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>Vm_SM</ci>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="Inverse_Voltage_units">0.017</cn>
+                            </apply>
+                            <cn cellml:units="time_units">1</cn>
+                        </apply>
+                        <cn cellml:units="time_units">0.440</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates tau_m_Na-->
+            <!-- equation that calculates m_Na-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m_Na_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>m_inf_Na</ci>
+                        <ci>m_Na_SM</ci>
+                    </apply>
+                    <ci>tau_m_Na</ci>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure of equation d(m_Na)/dt=(m_inf_Na-m_Na)/tau_m_Na-->
+    </component>
+    <!-- closure of m_Na-->
+    <component name="h_Na_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="h_inf_Na" units="dimensionless"/>
+        <variable name="tau_h_Na" units="time_units"/>
+        <variable initial_value="0.05787" name="h_Na_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_Na" public_interface="in" units="dimensionless"/>
+        <!-- equation that calculates f_inf_Na-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>h_inf_Na</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1.0</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1.0</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>Vm_SM</ci>
+                                    <cn cellml:units="voltage_units">78</cn>
+                                </apply>
+                                <cn cellml:units="voltage_units">3</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates h_inf_Na-->
+            <!-- equation that calculates tau_h_Na-->
+            <apply>
+                <eq/>
+                <ci>tau_h_Na</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_Na</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>Vm_SM</ci>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="Inverse_Voltage_units">0.25</cn>
+                            </apply>
+                            <cn cellml:units="time_units">1</cn>
+                        </apply>
+                        <cn cellml:units="time_units">5.50</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure of equation that calculates tau_h_Na-->
+            <!-- equation that calculates f_Na-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>h_Na_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>h_inf_Na</ci>
+                        <ci>h_Na_SM</ci>
+                    </apply>
+                    <ci>tau_h_Na</ci>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure of equation d(h_Na)/dt=(h_inf_Na-f_Na)/tau_h_Na-->
+    </component>
+    <!-- closure of hq_Na-->
+    <component name="I_Na_SM">
+        <variable cmeta:id="I_Na_SM_I_Na_SM" name="I_Na_SM" public_interface="out" units="current_units"/>
+        <variable name="E_Na" units="voltage_units"/>
+        <variable initial_value="3" name="G_max_Na_SM" units="conductance_units"/>
+        <variable name="Vm_SM" private_interface="out" public_interface="in" units="voltage_units"/>
+        <variable name="h_Na_SM" private_interface="in" units="dimensionless"/>
+        <variable name="m_Na_SM" private_interface="in" units="dimensionless"/>
+        <variable name="RToF" public_interface="in" units="voltage_units"/>
+        <variable name="Na_o" public_interface="in" units="millimolar"/>
+        <variable name="Na_i" public_interface="in" units="millimolar"/>
+        <variable name="T_correction_Na" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="time" private_interface="out" public_interface="in" units="time_units"/>
+        <!-- EQUATION OF E_Na-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>E_Na</ci>
+                <apply>
+                    <times/>
+                    <ci>RToF</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <divide/>
+                            <ci>Na_o</ci>
+                            <ci>Na_i</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- closure ofEquation E_Na -->
+            <!-- EQUATION OF I_Na-->
+            <apply>
+                <eq/>
+                <ci>I_Na_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>G_max_Na_SM</ci>
+                    <ci>h_Na_SM</ci>
+                    <ci>m_Na_SM</ci>
+                    <apply>
+                        <minus/>
+                        <ci>Vm_SM</ci>
+                        <ci>E_Na</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+        <!-- closure ofEquation I_Na -->
+    </component>
+    <!-- closure of I_Na-->
+    <component name="xa1_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="xa1_inf_SM" units="dimensionless"/>
+        <variable name="tau_xa1_SM" units="time_units"/>
+        <variable initial_value="0.00414" name="xa1_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_K" public_interface="in" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>xa1_inf_SM</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1.0</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1.0</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>Vm_SM</ci>
+                                    <cn cellml:units="voltage_units">26.5</cn>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="voltage_units">7.9</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>tau_xa1_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_K</ci>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="time_units">31.8</cn>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="time_units">175</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">0.5</cn>
+                                    </apply>
+                                    <apply>
+                                        <power/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <plus/>
+                                                <ci>Vm_SM</ci>
+                                                <cn cellml:units="voltage_units">44.4</cn>
+                                            </apply>
+                                            <cn cellml:units="voltage_units">22.3</cn>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">2</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>xa1_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>xa1_inf_SM</ci>
+                        <ci>xa1_SM</ci>
+                    </apply>
+                    <ci>tau_xa1_SM</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="xa2_SM">
+        <variable name="Vm_SM" public_interface="in" units="voltage_units"/>
+        <variable name="xa2_inf_SM" units="dimensionless"/>
+        <variable name="tau_xa2_SM" units="time_units"/>
+        <variable initial_value="0.72" name="xa2_SM" public_interface="out" units="dimensionless"/>
+        <variable name="time" public_interface="in" units="time_units"/>
+        <variable name="T_correction_K" public_interface="in" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>xa2_inf_SM</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="dimensionless">0.1</cn>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">0.9</cn>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1.0</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <plus/>
+                                        <ci>Vm_SM</ci>
+                                        <cn cellml:units="voltage_units">65</cn>
+                                    </apply>
+                                    <cn cellml:units="voltage_units">6.2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>tau_xa2_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>T_correction_K</ci>
+                    <cn cellml:units="time_units">90</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>xa2_SM</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>xa2_inf_SM</ci>
+                        <ci>xa2_SM</ci>
+                    </apply>
+                    <ci>tau_xa2_SM</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="I_ka_SM">
+        <variable name="I_ka_SM" public_interface="out" units="current_units"/>
+        <variable name="E_K" public_interface="out" units="voltage_units"/>
+        <variable initial_value="9" name="G_max_ka_SM" units="conductance_units"/>
+        <variable name="Vm_SM" private_interface="out" public_interface="in" units="voltage_units"/>
+        <variable name="xa1_SM" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="xa2_SM" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="RToF" public_interface="in" units="voltage_units"/>
+        <variable name="K_o" public_interface="in" units="millimolar"/>
+        <variable name="K_i" public_interface="in" units="millimolar"/>
+        <variable name="T_correction_K" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="time" private_interface="out" public_interface="in" units="time_units"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>E_K</ci>
+                <apply>
+                    <times/>
+                    <ci>RToF</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <divide/>
+                            <ci>K_o</ci>
+                            <ci>K_i</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I_ka_SM</ci>
+                <apply>
+                    <times/>
+                    <ci>G_max_ka_SM</ci>
+                    <ci>xa1_SM</ci>
+                    <ci>xa2_SM</ci>
+                    <apply>
+                        <minus/>
+                        <ci>Vm_SM</ci>
+                        <ci>E_K</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="xa1_SM" component_2="I_ka_SM"/>
+        <map_variables variable_1="Vm_SM" variable_2="Vm_SM"/>
+        <map_variables variable_1="xa1_SM" variable_2="xa1_SM"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T_correction_K" variable_2="T_correction_K"/>
+    </connection>
+    <connection>
+        <map_components component_1="xa2_SM" component_2="I_ka_SM"/>
+        <map_variables variable_1="Vm_SM" variable_2="Vm_SM"/>
+        <map_variables variable_1="xa2_SM" variable_2="xa2_SM"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T_correction_K" variable_2="T_correction_K"/>
+    </connection>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="I_ka_SM">
+            <component_ref component="xa1_SM"/>
+            <component_ref component="xa2_SM"/>
+        </component_ref>
+    </group>
+</model>
